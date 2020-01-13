@@ -1,0 +1,241 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General styles */
+
+:root {
+  --top-distance: 40px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  letter-spacing: 1.2px;
+  color: #333;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.no-outline {
+  outline: none;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+button {
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  background: palevioletred;
+  transition: all 0.2s ease-in;
+}
+
+button:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* NAVBAR */
+.navbar {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: space-between;
+  line-height: var(--top-distance);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #ddd;
+}
+
+/* So the forms aren't too close to the borders */
+.form {
+  margin: 0 5px 0 5px;
+}
+
+/* select,search */
+.input {
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: palevioletred;
+  width: 120px;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+/* style the option tabs on the selects elements */
+option {
+  font-size: 0.9rem;
+  background: #ddd;
+  color: palevioletred;
+}
+
+/* input search = type name of anime */
+#search::placeholder {
+  color: palevioletred;
+}
+
+/* buttons for the icons on the navbar */
+.icon {
+  padding: 2px 5px;
+  margin-left: 7px;
+}
+
+/* ANIME PAGE */
+.anime-page {
+  position: relative;
+  top: var(--top-distance);
+  height: 94vh;
+  justify-content: space-around;
+  align-items: center;
+  text-align: left;
+  overflow: hidden;
+  display: none;
+  opacity: 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.anime-page img {
+  border: 2px solid palevioletred;
+  border-radius: 5px;
+  box-shadow: 5px 5px 20px #333, -5px -5px 20px #333;
+}
+
+.anime-page .icon {
+  position: absolute;
+  right: 4px;
+  top: 5px;
+  font-size: 1rem;
+}
+
+.info {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  /* max-height: 600px; */
+  width: 600px;
+  overflow: hidden;
+}
+
+.info h2 {
+  color: palevioletred;
+  /* border: 1px solid red; */
+  font-size: 1.7rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.details {
+  /* border: 1px solid red; */
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.details span {
+  color: palevioletred;
+}
+
+.desc {
+  /* border: 1px solid red; */
+  margin-top: 30px;
+  font-size: 1rem;
+  /* line-height: 25px; */
+}
+
+.favBtn {
+  position: fixed;
+  left: 25px;
+  bottom: 110px;
+  padding: 0px 5px 0px 0;
+}
+
+.favBtn i {
+  margin-right: 5px;
+  width: 30px;
+  line-height: 30px;
+  color: palevioletred;
+  background: #333;
+  border-radius: 5px 0 0 5px;
+}
+
+/* ANIMES CONTAINER */
+.animes-container {
+  /* border: 1px solid red; */
+  position: relative;
+  top: calc(var(--top-distance) + 5px);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-row-gap: 10px;
+}
+
+.anime {
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  overflow: hidden;
+  width: 170px;
+  height: 250px;
+}
+
+.imgCover {
+  /* border: 1px solid red; */
+  width: 160px;
+  height: 200px;
+  position: absolute;
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
+}
+
+.imgCover:hover {
+  background: #333;
+  opacity: 0.5;
+}
+
+.anime img {
+  width: 160px;
+  height: 200px;
+}
+
+.anime p {
+  /* border: 1px solid red; */
+  margin-top: 3px;
+  cursor: default;
+  font-size: 0.85rem;
+  width: 170px;
+  height: 50px;
+  overflow: hidden;
+}
+
+.anime-fav-page {
+  min-height: 94vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+/* LAST BUTTON */
+.show-more {
+  position: relative;
+  padding: 10px;
+  margin: 50px 0 5px;
+}
+
+.active {
+  display: flex;
+  opacity: 1;
+}
+
+.hide {
+  display: none;
+  opacity: 0;
+}
