@@ -3,13 +3,11 @@ const animePage = document.querySelector('.anime-page');
 const showMoreBtn = document.querySelector('.show-more');
 // Contains gender and sort forms
 const sortForm = document.querySelector('.form-sort');
-// Search form
 const searchForm = document.querySelector('#search');
 const searchBtn = document.querySelector('#searchBtn');
 const heartBtn = document.querySelector('#favPageBtn');
 
 let closeBtn, favBtn;
-
 // Keep record of the last sort keyword used, so that when the genre changes, it doesn't go back to Trending
 let sort = 'TRENDING_DESC';
 let inputAnimeName;
@@ -90,7 +88,6 @@ function queryAPI(queryInfo = queryAllAnime, variable = variablesFoQuery, callba
 
 function displayAllAnime(animeData) {
   let animeArray;
-  console.log(animeData.data != undefined);
   if (animeData.data != undefined) {
     animeArray = animeData.data.Page.media;
   } else {
@@ -265,11 +262,30 @@ function filterByGenre(genre) {
   }
 }
 
+function typing() {
+  inputAnimeName = this.value;
+  console.log(inputAnimeName);
+}
+
 function searchAnime(e) {
-  inputAnimeName = e.target.value;
-  if (e.keyCode == 13) {
+  inputAnimeName = this.value;
+
+  // Just cleared the search box
+  if(inputAnimeName.length == 0) {
+    // Go back to home page
+    deleteSearch()
+  } else {
+    // If we pressed enter
     submitSearch();
   }
+}
+
+function deleteSearch() {
+  variablesFoQuery = {
+    page: 1,
+    sort: sort,
+  };
+  refreshScreen();
 }
 
 function submitSearch() {
@@ -300,7 +316,7 @@ function toggleFavPage(e) {
     container.classList.remove('anime-fav-page');
     refreshScreen();
     showMoreBtn.classList.remove('hide');
-  } else {
+  } else if(btn.matches('.fa-heart-o')){
     // Make heart full
     btn.classList.add('fa-heart');
     btn.classList.remove('fa-heart-o');
@@ -314,7 +330,8 @@ function toggleFavPage(e) {
 
 showMoreBtn.addEventListener('click', loadMoreAnimes);
 sortForm.addEventListener('change', changeAnimeFilter);
-searchForm.addEventListener('keyup', searchAnime);
+searchForm.addEventListener('keyup', typing);
+searchForm.addEventListener('search', searchAnime);
 searchBtn.addEventListener('click', submitSearch);
 container.addEventListener('click', openAnime);
 heartBtn.addEventListener('click', toggleFavPage);
