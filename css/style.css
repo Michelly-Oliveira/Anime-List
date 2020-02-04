@@ -19,6 +19,8 @@ body {
   color: #333;
   text-align: center;
   overflow-x: hidden;
+  width: 100vw;
+  min-height: 100vh;
 }
 
 .no-outline {
@@ -86,8 +88,27 @@ option {
 
 /* buttons for the icons on the navbar */
 .icon {
-  padding: 2px 5px;
+  /* padding: 2px 5px; */
+  height: 20px;
+  line-height: 20px;
+  width: 23px;
+  text-align: center;
   margin-left: 7px;
+}
+
+.icon i {
+  width: 100%;
+  height: 100%;
+}
+
+@media(max-width: 610px) {
+  .navbar {
+    justify-content: center;
+  }
+
+  .form-sort  {
+     display: none;
+  }
 }
 
 /* ANIME PAGE */
@@ -101,7 +122,6 @@ option {
   overflow: hidden;
   display: none;
   opacity: 0;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .anime-page img {
@@ -118,24 +138,20 @@ option {
 }
 
 .info {
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  /* max-height: 600px; */
   width: 600px;
   overflow: hidden;
 }
 
 .info h2 {
   color: palevioletred;
-  /* border: 1px solid red; */
   font-size: 1.7rem;
   letter-spacing: 2px;
   margin-bottom: 10px;
 }
 
 .details {
-  /* border: 1px solid red; */
   font-size: 0.9rem;
   font-weight: bold;
 }
@@ -145,16 +161,14 @@ option {
 }
 
 .desc {
-  /* border: 1px solid red; */
   margin-top: 30px;
   font-size: 1rem;
-  /* line-height: 25px; */
 }
 
 .favBtn {
   position: fixed;
-  left: 25px;
-  bottom: 110px;
+  left: 23px;
+  bottom: 100px;
   padding: 0px 5px 0px 0;
 }
 
@@ -169,16 +183,16 @@ option {
 
 /* ANIMES CONTAINER */
 .animes-container {
-  /* border: 1px solid red; */
   position: relative;
   top: calc(var(--top-distance) + 5px);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
   grid-row-gap: 10px;
+  justify-items: center;
+  align-items: center;
 }
 
 .anime {
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -189,7 +203,6 @@ option {
 }
 
 .imgCover {
-  /* border: 1px solid red; */
   width: 160px;
   height: 200px;
   position: absolute;
@@ -208,7 +221,6 @@ option {
 }
 
 .anime p {
-  /* border: 1px solid red; */
   margin-top: 3px;
   cursor: default;
   font-size: 0.85rem;
@@ -220,7 +232,6 @@ option {
 .anime-fav-page {
   min-height: 94vh;
   overflow: hidden;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 /* LAST BUTTON */

@@ -89,8 +89,10 @@ function queryAPI(queryInfo = queryAllAnime, variable = variablesFoQuery, callba
 function displayAllAnime(animeData) {
   let animeArray;
   if (animeData.data != undefined) {
+    // Show animes after we query the API
     animeArray = animeData.data.Page.media;
   } else {
+    // Show the animes saved as favorites
     animeArray = animeData;
   }
 
@@ -109,28 +111,40 @@ function displayAllAnime(animeData) {
 }
 
 function displayOneAnime(animeData) {
+  // Make it easier to use the anime data
   const anime = animeData.data.Media;
+  // Replace any null values
   const title = anime.title.english == null ? anime.title.romaji : anime.title.english;
+  const year = anime.startDate.year == null ? '' : anime.startDate.year; 
+  const duration = anime.duration == null ? '0' : anime.duration;
+  const episodes = anime.episodes == null ? '0' : anime.episodes;
+  const score = anime.averageScore == null ? '0' : anime.averageScore;
+  
   anime.isFav = checkIfFav(anime);
+  // Select text based on the favorite status
   const button = changeBtnText(anime);
 
+  // Create a string with all the necessary anime information and add it to the page
   animePage.innerHTML += `
     <button id="closeBtn" class="icon no-outline cursor"><i class="fa fa-times"></i></button>
     <img src="${anime.coverImage.large}" alt="cover">
     <div class="info">
       <h2>${title}</h2>
-      <p class="details">${anime.startDate.year} <span>-</span> ${anime.duration}min <span>-</span> ${anime.episodes} episodes <span>-</span> ${anime.averageScore}/100 <span>-</span> ${anime.genres}</p>
+      <p class="details">${year} <span>-</span> ${duration}min <span>-</span> ${episodes} episodes <span>-</span> ${score}/100 <span>-</span> ${anime.genres}</p>
       <p class="desc">${anime.description}</p>
     </div>
     <button class="favBtn no-outline cursor">${button}</button>`;
 
+  // When the user wants to close the specific anime 
   closeBtn = document.querySelector('#closeBtn');
   favBtn = document.querySelector('.favBtn');
   closeBtn.addEventListener('click', closeAnimePage);
   favBtn.addEventListener('click', () => {
+    // Change button "Add to/Remove from favorite" text
     toggleFav(anime);
   });
 
+  // Show anime page and hide the animes page
   animePage.classList.add('active');
   container.classList.add('hide');
   showMoreBtn.classList.add('hide');
