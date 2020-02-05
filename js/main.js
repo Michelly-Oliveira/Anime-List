@@ -127,13 +127,15 @@ function displayOneAnime(animeData) {
   // Create a string with all the necessary anime information and add it to the page
   animePage.innerHTML += `
     <button id="closeBtn" class="icon no-outline cursor"><i class="fa fa-times"></i></button>
-    <img src="${anime.coverImage.large}" alt="cover">
+    <div class="img-favBtn">
+      <img src="${anime.coverImage.large}" alt="cover">
+      <button class="favBtn no-outline cursor">${button}</button>
+    </div>
     <div class="info">
       <h2>${title}</h2>
       <p class="details">${year} <span>-</span> ${duration}min <span>-</span> ${episodes} episodes <span>-</span> ${score}/100 <span>-</span> ${anime.genres}</p>
       <p class="desc">${anime.description}</p>
-    </div>
-    <button class="favBtn no-outline cursor">${button}</button>`;
+    </div>`;
 
   // When the user wants to close the specific anime 
   closeBtn = document.querySelector('#closeBtn');
