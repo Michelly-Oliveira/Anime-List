@@ -2,7 +2,7 @@ const container = document.querySelector('.animes-container');
 const animePage = document.querySelector('.anime-page');
 const showMoreBtn = document.querySelector('.show-more');
 // Contains gender and sort forms
-const sortForm = document.querySelector('.form-sort');
+const sortForm = document.querySelector('.selector-sort');
 const searchForm = document.querySelector('#search');
 const searchBtn = document.querySelector('#searchBtn');
 const heartBtn = document.querySelector('#favPageBtn');
@@ -11,6 +11,8 @@ let closeBtn, favBtn;
 // Keep record of the last sort keyword used, so that when the genre changes, it doesn't go back to Trending
 let sort = 'TRENDING_DESC';
 let inputAnimeName;
+
+let prevScrollPos;
 
 // Keep record of the favorite animes
 let animeStorage = JSON.parse(localStorage.getItem('animeStorage')) || [];
@@ -150,10 +152,13 @@ function displayOneAnime(animeData) {
   animePage.classList.add('active');
   container.classList.add('hide');
   showMoreBtn.classList.add('hide');
+
+  window.scrollTo(0,0);
 }
 
 function openAnime(e) {
   const element = e.target;
+  prevScrollPos = window.pageYOffset;
 
   // Skip this if the click wasn't on the imgCover(on top of the img)
   if (!element.matches('.imgCover')) {
@@ -173,7 +178,14 @@ function closeAnimePage() {
 
   animePage.classList.remove('active');
   container.classList.remove('hide');
-  showMoreBtn.classList.remove('hide');
+  // If the previous page is the fav animes page
+  if(heartBtn.firstChild.matches('.fa-heart-o')) {
+    console.log('hey');
+    showMoreBtn.classList.remove('hide');
+  }
+
+  // Go back to where we were before opening an anime
+  window.scrollTo(0,prevScrollPos);
 }
 
 function checkIfFav(anime) {
@@ -206,6 +218,8 @@ function toggleFav(anime) {
         animeStorage.splice(index, 1);
       }
     });
+    container.innerHTML = '';
+    displayAllAnime(animeStorage);
   }
 
   favBtn.innerHTML = changeBtnText(anime);
