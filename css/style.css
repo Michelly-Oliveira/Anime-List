@@ -104,7 +104,7 @@ option {
   height: 100%;
 }
 
-@media(max-width: 610px) {
+@media(max-width: 660px) {
   .navbar {
     justify-content: center;
   }
@@ -118,7 +118,7 @@ option {
 .anime-page {
   position: relative;
   top: var(--top-distance);
-  min-height: 100vh;
+  min-height: 94vh;
   justify-content: center;
   align-items: center;
   text-align: left;
@@ -163,8 +163,8 @@ option {
 /* Close btn */
 .anime-page .icon {
   position: absolute;
-  right: 4px;
-  top: 5px;
+  right: 20px;
+  top: 10px;
   font-size: 1rem;
 }
 
@@ -201,12 +201,14 @@ option {
     text-align: center;
   }
 
-  .anime-page .icon {
-    right: 5px;
-  }
-
   .info {
     margin: 1rem;
+  }
+}
+
+@media(max-width: 600px) {
+  .anime-page .icon {
+    right: 5px;
   }
 }
 
