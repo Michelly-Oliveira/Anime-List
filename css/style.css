@@ -116,13 +116,13 @@ option {
 .anime-page {
 	position: relative;
 	top: var(--top-distance);
-	height: 94vh;
+	min-height: 94vh;
 	justify-content: center;
 	align-items: center;
 	text-align: left;
 	display: none;
 	opacity: 0;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 .img-favBtn {
