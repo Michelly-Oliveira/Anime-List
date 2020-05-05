@@ -1,283 +1,289 @@
 /* Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 /* General styles */
 
 :root {
-  --top-distance: 40px;
-}
-
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 18px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  color: #333;
-  text-align: center;
-  overflow-x: hidden;
-  width: 100vw;
-  min-height: 100vh;
+	--top-distance: 45px;
+	--primary-color: palevioletred;
+	--secondary-color: #333;
 }
 
 .no-outline {
-  outline: none;
+	outline: none;
 }
 
 .cursor {
-  cursor: pointer;
+	cursor: pointer;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	background: #c3cfe29c;
+	color: var(--secondary-color);
+	text-align: center;
+	overflow-x: hidden;
+	width: 100vw;
+	height: 100vh;
 }
 
 button {
-  color: #333;
-  border: none;
-  border-radius: 5px;
-  background: palevioletred;
-  transition: all 0.2s ease-in;
-  font-size: 1em;
+	color: var(--secondary-color);
+	border: none;
+	border-radius: 5px;
+	background: var(--primary-color);
+	transition: all 0.2s ease-in;
+	font-size: 1em;
 }
 
 button:hover {
-  transform: scale(.9);
-  opacity: 0.8;
+	transform: scale(0.9);
+	opacity: 0.8;
+}
+
+/* buttons for the icons */
+.icon {
+	line-height: 25px;
+	width: 30px;
+	text-align: center;
+	margin-left: 7px;
+}
+
+.icon i {
+	width: 100%;
+	height: 100%;
 }
 
 /* NAVBAR */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  line-height: var(--top-distance);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background: #ddd;
+	display: flex;
+	justify-content: space-between;
+	line-height: var(--top-distance);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+	background: #ddd;
 }
 
-.selector {
-  margin: 0 5px 0 5px;
+.selectors {
+	margin: 0 5px 0 5px;
 }
 
-/* dropdown, search */
-.input {
-  border: none;
-  width: 500px;
-  background: transparent;
-  font-size: 0.9rem;
-  color: palevioletred;
-  width: 120px;
-  box-sizing: border-box;
-  margin-right: 10px;
-  font-size: 1em;
+#search,
+#sort,
+#genre {
+	width: 150px;
+	border: none;
+	background: transparent;
+	font-size: 0.9rem;
+	color: var(--primary-color);
+	box-sizing: border-box;
+	margin-right: 10px;
+	font-size: 1em;
 }
 
 /* style the option tabs on the selects elements */
 option {
-  font-size: 0.9rem;
-  background: #ddd;
-  color: palevioletred;
-}
-
-#search {
-  width: 150px;
+	font-size: 0.9rem;
+	background: #ddd;
+	color: var(--primary-color);
 }
 
 /* input search = type name of anime */
 #search::placeholder {
-  color: palevioletred;
+	color: var(--primary-color);
 }
 
-/* buttons for the icons on the navbar */
-.icon {
-  line-height: 25px;
-  width: 30px;
-  text-align: center;
-  margin-left: 7px;
-}
+@media (max-width: 660px) {
+	.navbar {
+		justify-content: center;
+	}
 
-.icon i {
-  width: 100%;
-  height: 100%;
-}
-
-@media(max-width: 660px) {
-  .navbar {
-    justify-content: center;
-  }
-
-  .selector-sort  {
-     display: none;
-  }
+	/* Don't show the genres and sort dropdowns */
+	.selector-sort {
+		display: none;
+	}
 }
 
 /* ANIME PAGE */
 .anime-page {
-  position: relative;
-  top: var(--top-distance);
-  min-height: 94vh;
-  justify-content: center;
-  align-items: center;
-  text-align: left;
-  display: none;
-  opacity: 0;
-  overflow: hidden;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	position: relative;
+	top: var(--top-distance);
+	height: 94vh;
+	justify-content: center;
+	align-items: center;
+	text-align: left;
+	display: none;
+	opacity: 0;
+	overflow: hidden;
 }
 
 .img-favBtn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .anime-page img {
-  border: 2px solid palevioletred;
-  border-radius: 5px;
-  box-shadow: 5px 5px 20px #333, -5px -5px 20px #333;
-  margin: 1rem;
+	border: 2px solid var(--primary-color);
+	border-radius: 5px;
+	box-shadow: 0px 0px 20px var(--secondary-color),
+		0px 0px 20px var(--secondary-color);
+	margin: 1rem;
 }
 
 .favBtn {
-  padding: 0px 5px 0px 0;
-  width: 90%;
-  position: relative;
-  line-height: 40px;
-  font-size: .9em;
-} 
+	padding: 0px 5px 0px 0;
+	width: 90%;
+	position: relative;
+	line-height: 40px;
+	font-size: 0.9em;
+}
 
 .favBtn i {
-  margin-right: 5px;
-  width: 40px;
-  line-height: 40px;
-  color: palevioletred;
-  background: #333;
-  border-radius: 5px 0 0 5px;
-  float: left;
+	margin-right: 5px;
+	width: 40px;
+	line-height: 40px;
+	color: var(--primary-color);
+	background: var(--secondary-color);
+	border-radius: 5px 0 0 5px;
+	float: left;
 }
 
 /* Close btn */
-.anime-page .icon {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  font-size: 1rem;
+#closeBtn {
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	font-size: 1rem;
 }
 
 .info {
-  display: flex;
-  flex-direction: column;
-  max-width: 600px;
-  margin: 0 1rem;
+	display: flex;
+	flex-direction: column;
+	max-width: 600px;
+	margin: 0 1rem;
 }
 
 .info h2 {
-  color: palevioletred;
-  font-size: 2em;
-  margin-bottom: 10px;
+	color: var(--primary-color);
+	font-size: 2em;
+	margin-bottom: 10px;
 }
 
 .details {
-  font-size: 1em;
-  font-weight: bold;
+	font-size: 1em;
+	font-weight: bold;
 }
 
 .details span {
-  color: palevioletred;
+	color: var(--primary-color);
 }
 
 .desc {
-  margin-top: 30px;
-  font-size: 1em;
+	margin-top: 30px;
+	font-size: 1em;
 }
 
-@media(max-width: 740px) {
-  .anime-page {
-    flex-direction: column;
-    text-align: center;
-  }
+@media (max-width: 740px) {
+	.anime-page {
+		flex-direction: column;
+		text-align: center;
+	}
 
-  .info {
-    margin: 1rem;
-  }
+	.info {
+		margin: 1rem;
+	}
 }
 
-@media(max-width: 600px) {
-  .anime-page .icon {
-    right: 5px;
-  }
+@media (max-width: 600px) {
+	.anime-page .icon {
+		right: 5px;
+	}
 }
 
 /* ANIMES CONTAINER */
 .animes-container {
-  position: relative;
-  top: calc(var(--top-distance) + 5px);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
-  grid-row-gap: 10px;
-  justify-items: center;
-  align-items: center;
-  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+	position: relative;
+	top: calc(var(--top-distance) + 10px);
+	display: grid;
+	/* Specify the min and max size of each column */
+	/* auto-ft: make the columns wrap in new lines if there's no more space */
+	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+	grid-row-gap: 10px;
+	justify-items: center;
+	align-items: center;
+	width: 98%;
+}
+
+@media (min-width: 1000px) {
+	.animes-container {
+		margin: auto;
+	}
 }
 
 .anime {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  overflow: hidden;
-  width: 170px;
-  height: 250px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 170px;
+	height: 250px;
 }
 
+/* Div on top of the image to show the dark hover */
 .imgCover {
-  width: 160px;
-  height: 200px;
-  position: absolute;
-  z-index: 2;
-  transition: all 0.2s ease-in-out;
+	width: 160px;
+	height: 200px;
+	position: absolute;
+	z-index: 2;
+	transition: all 0.2s ease-in-out;
 }
 
 .imgCover:hover {
-  background: #333;
-  opacity: 0.5;
+	background: var(--secondary-color);
+	opacity: 0.5;
 }
 
 .anime img {
-  width: 160px;
-  height: 200px;
+	width: 160px;
+	height: 200px;
 }
 
 .anime p {
-  margin-top: 3px;
-  cursor: default;
-  font-size: 0.85rem;
-  width: 170px;
-  height: 50px;
-  overflow: hidden;
+	margin-top: 3px;
+	cursor: default;
+	font-size: 0.8em;
+	width: 170px;
+	height: 50px;
+	overflow: hidden;
 }
 
+/* Favorite animes page */
 .anime-fav-page {
-  overflow: hidden;
+	justify-items: left;
 }
 
 /* LAST BUTTON */
 .show-more {
-  position: relative;
-  padding: 10px 20px;
-  margin: 50px 0 5px;
+	position: relative;
+	padding: 10px 20px;
+	margin: 50px 0 5px;
 }
 
 .active {
-  display: flex;
-  opacity: 1;
+	display: flex;
+	opacity: 1;
 }
 
 .hide {
-  display: none;
-  opacity: 0;
+	display: none;
+	opacity: 0;
 }
