@@ -199,6 +199,11 @@ option {
 		text-align: center;
 	}
 
+	.anime-page img {
+		border: 2px solid var(--secondary-color);
+		box-shadow: none;
+	}
+
 	.info {
 		margin: 1rem;
 	}
