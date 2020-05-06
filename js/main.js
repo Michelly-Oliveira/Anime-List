@@ -2,10 +2,11 @@ const container = document.querySelector('.animes-container');
 const animePage = document.querySelector('.anime-page');
 const showMoreBtn = document.querySelector('.show-more');
 // Contains gender and sort forms
-const sortForm = document.querySelector('.selector-sort');
+const sortField = document.querySelector('#sort');
+const genresField = document.querySelector('#genre');
 const searchForm = document.querySelector('#search');
 const searchBtn = document.querySelector('#searchBtn');
-const heartBtn = document.querySelector('#favPageBtn');
+const favPageBtn = document.querySelector('#favPageBtn');
 
 // Keep record of the last sort keyword used, so that when the genre changes, it doesn't go back to Trending
 let sort = 'TRENDING_DESC';
@@ -117,8 +118,9 @@ window.onload = () => {
 	searchForm.addEventListener('keyup', typing);
 	// Search anime when click on the search button
 	searchBtn.addEventListener('click', submitSearch);
-	heartBtn.addEventListener('click', toggleFavPage);
-	sortForm.addEventListener('change', changeAnimeFilter);
+	favPageBtn.addEventListener('click', toggleFavPage);
+	sortField.addEventListener('change', filterBySortType);
+	genresField.addEventListener('change', filterByGenre);
 	showMoreBtn.addEventListener('click', loadMoreAnimes);
 
 	// Show trending animes when program starts
@@ -167,6 +169,12 @@ function displayAllAnime(animeData) {
 	} else {
 		// Show the animes saved as favorites on localStorage
 		animeArray = animeData;
+	}
+
+	if (animeData.data.Page.pageInfo.hasNextPage) {
+		showMoreBtn.classList.remove('hide');
+	} else {
+		showMoreBtn.classList.add('hide');
 	}
 
 	// Add content to the screen as a string of divs, each div containing an anime image and name, with the id associate to it
@@ -321,8 +329,8 @@ function closeAnimePage() {
 	container.classList.remove('hide');
 
 	// If the previous page is the fav animes page don't show the ShowMore btn
-	if (heartBtn.firstElementChild.matches('.fa-heart-o')) {
-		showMoreBtn.classList.remove('hide');
+	if (favPageBtn.firstElementChild.matches('.fa-heart')) {
+		showMoreBtn.classList.add('hide');
 	}
 
 	// Go back to where we were before opening an anime
@@ -336,19 +344,9 @@ function loadMoreAnimes() {
 	queryAPI();
 }
 
-function changeAnimeFilter(e) {
-	// Clicked on the sort dropdown
-	if (e.target.name == 'sort') {
-		filterBySortType(e.target.value);
-	} else if (e.target.name == 'genre') {
-		// Clicked on the genre dropdown
-		filterByGenre(e.target.value);
-	}
+function filterBySortType(e) {
+	const sortKeyword = e.target.value;
 
-	refreshScreen();
-}
-
-function filterBySortType(sortKeyword) {
 	switch (sortKeyword) {
 		case 'trending':
 			sort = 'TRENDING_DESC';
@@ -368,9 +366,13 @@ function filterBySortType(sortKeyword) {
 	}
 
 	variablesFoQuery.sort = sort;
+
+	clearSearchInput();
+	refreshScreen();
 }
 
-function filterByGenre(genre) {
+function filterByGenre(e) {
+	const genre = e.target.value;
 	// Don't pass the genre property if we selected all
 	if (genre == 'all') {
 		variablesFoQuery = {
@@ -385,6 +387,14 @@ function filterByGenre(genre) {
 			genre: genre,
 		};
 	}
+
+	clearSearchInput();
+	refreshScreen();
+}
+
+function clearSearchInput() {
+	searchForm.value = '';
+	inputAnimeName = '';
 }
 
 function typing(e) {
@@ -401,8 +411,6 @@ function typing(e) {
 			// If the search box is not empty search for that anime
 			submitSearch();
 		}
-
-		refreshScreen();
 	}
 }
 
@@ -412,6 +420,13 @@ function deleteSearch() {
 		page: 1,
 		sort: 'TRENDING_DESC',
 	};
+
+	// Go back to the first option of the sortField = 'TRENDING_DESC'
+	sortField.selectedIndex = 0;
+	// Go back to the first option of the genreField = 'All'
+	genresField.selectedIndex = 0;
+
+	refreshScreen();
 }
 
 function submitSearch() {
@@ -420,6 +435,35 @@ function submitSearch() {
 		sort: sort,
 		search: inputAnimeName,
 	};
+
+	refreshScreen();
+}
+
+function toggleFavPage(e) {
+	// Check if we clicked on the heart icon inside the button
+	const btn = e.target;
+
+	// If heart is full we are on the fav page
+	if (btn.matches('.fa-heart')) {
+		// Make heart empty
+		btn.className = 'fa fa-heart-o';
+		// go back to the animes container page
+		container.classList.remove('anime-fav-page');
+		// Clear the screen and query the API for the animes
+		refreshScreen();
+		// Show
+		showMoreBtn.classList.remove('hide');
+	} else if (btn.matches('.fa-heart-o')) {
+		// If heart is empty we are on the animes container page
+		// Make heart full
+		btn.className = 'fa fa-heart';
+		// Clear the screen
+		container.innerHTML = '';
+		// go to the fav anime page
+		container.classList.add('anime-fav-page');
+		showMoreBtn.classList.add('hide');
+		displayAllAnime(animeStorage);
+	}
 }
 
 function refreshScreen() {
@@ -429,26 +473,4 @@ function refreshScreen() {
 	variablesFoQuery.page = 1;
 	// Show anime
 	queryAPI();
-}
-
-function toggleFavPage(e) {
-	const btn = e.target;
-
-	if (btn.matches('.fa-heart')) {
-		// Make heart empty
-		btn.classList.remove('fa-heart');
-		btn.classList.add('fa-heart-o');
-		container.classList.remove('anime-fav-page');
-		refreshScreen();
-		showMoreBtn.classList.remove('hide');
-	} else if (btn.matches('.fa-heart-o')) {
-		// Make heart full
-		btn.classList.add('fa-heart');
-		btn.classList.remove('fa-heart-o');
-		// Clear the screen
-		container.innerHTML = '';
-		container.classList.add('anime-fav-page');
-		showMoreBtn.classList.add('hide');
-		displayAllAnime(animeStorage);
-	}
 }
