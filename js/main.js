@@ -37,6 +37,9 @@ let animeStorage = JSON.parse(localStorage.getItem('animeStorage')) || [];
 let queryAllAnime = `
 query($page: Int, $sort: [MediaSort], $genre: String, $search: String) {
   Page(page: $page) {
+	pageInfo {
+      hasNextPage
+    },
     media(sort: $sort, type:ANIME, genre: $genre, search: $search) {
       id
       title {
@@ -107,16 +110,16 @@ let variablesFoQuery = {
 	sort: sort,
 };
 
+// After the window finishes loading, add the event listeners
 window.onload = () => {
-	// After the window finishes loading, add the event listeners
-	showMoreBtn.addEventListener('click', loadMoreAnimes);
-	sortForm.addEventListener('change', changeAnimeFilter);
-	// When a key is pressed update the input of the search
+	container.addEventListener('click', openAnime);
+	// When a key is pressed, update the input of the search
 	searchForm.addEventListener('keyup', typing);
 	// Search anime when click on the search button
 	searchBtn.addEventListener('click', submitSearch);
-	container.addEventListener('click', openAnime);
 	heartBtn.addEventListener('click', toggleFavPage);
+	sortForm.addEventListener('change', changeAnimeFilter);
+	showMoreBtn.addEventListener('click', loadMoreAnimes);
 
 	// Show trending animes when program starts
 	queryAPI();
@@ -249,7 +252,6 @@ function checkIfFav(anime) {
 		}
 	});
 
-	// Otherwise, return false
 	return isFav;
 }
 
@@ -262,8 +264,10 @@ function changeBtnText(anime) {
 }
 
 function toggleFav(anime) {
+	// Set it to the opposite
 	anime.isFav = !anime.isFav;
 
+	// If is a favorite, select the data needed and add it to the array from localStorage
 	if (anime.isFav) {
 		const animeDataToStore = {
 			id: anime.id,
@@ -273,31 +277,39 @@ function toggleFav(anime) {
 		};
 		animeStorage.push(animeDataToStore);
 	} else {
+		// If is not a favorite, remove it from the array
 		animeStorage.forEach((animeFromStorage, index) => {
 			if (animeFromStorage.id == anime.id) {
 				animeStorage.splice(index, 1);
 			}
 		});
+		// If we are in the anime-fav-page and remove an item, remove the items on the page and add them again; remove the deleted item from the screen
 		container.innerHTML = '';
 		displayAllAnime(animeStorage);
 	}
 
+	// Update the array on localStorage
 	localStorage.setItem('animeStorage', JSON.stringify(animeStorage));
 }
 
 function openAnime(e) {
+	// Select the element we clicked
 	const element = e.target;
-	prevScrollPos = window.pageYOffset;
 
-	// Skip this if the click wasn't on the imgCover(on top of the img)
+	// Do nothing if the click wasn't on the imgCover(on top of the img) of the anime
 	if (!element.matches('.imgCover')) {
 		return;
 	}
 
+	// Save position(scroll y) we were before opening the anime
+	prevScrollPos = window.pageYOffset;
+
+	// Get the id of the anime we clicked and save as an object so we can pass it to the queryAPI() as a variable on the request body, it will be the parameter to query the api
 	const animeId = {
 		id: element.dataset.id,
 	};
 
+	// Get data from an specific anime based on its id
 	queryAPI(querySelectedAnime, animeId, displayOneAnime);
 }
 
@@ -307,7 +319,8 @@ function closeAnimePage() {
 
 	animePage.classList.remove('active');
 	container.classList.remove('hide');
-	// If the previous page is the fav animes page
+
+	// If the previous page is the fav animes page don't show the ShowMore btn
 	if (heartBtn.firstElementChild.matches('.fa-heart-o')) {
 		showMoreBtn.classList.remove('hide');
 	}
@@ -324,9 +337,11 @@ function loadMoreAnimes() {
 }
 
 function changeAnimeFilter(e) {
+	// Clicked on the sort dropdown
 	if (e.target.name == 'sort') {
 		filterBySortType(e.target.value);
 	} else if (e.target.name == 'genre') {
+		// Clicked on the genre dropdown
 		filterByGenre(e.target.value);
 	}
 
@@ -336,32 +351,34 @@ function changeAnimeFilter(e) {
 function filterBySortType(sortKeyword) {
 	switch (sortKeyword) {
 		case 'trending':
-			variablesFoQuery.sort = 'TRENDING_DESC';
+			sort = 'TRENDING_DESC';
 			break;
 		case 'popular':
-			variablesFoQuery.sort = 'POPULARITY_DESC';
+			sort = 'POPULARITY_DESC';
 			break;
 		case 'title':
-			variablesFoQuery.sort = 'TITLE_ROMAJI';
+			sort = 'TITLE_ROMAJI';
 			break;
 		case 'oldest':
-			variablesFoQuery.sort = 'START_DATE';
+			sort = 'START_DATE';
 			break;
 		case 'newest':
-			variablesFoQuery.sort = 'START_DATE_DESC';
+			sort = 'START_DATE_DESC';
 			break;
 	}
 
-	sort = variablesFoQuery.sort;
+	variablesFoQuery.sort = sort;
 }
 
 function filterByGenre(genre) {
+	// Don't pass the genre property if we selected all
 	if (genre == 'all') {
 		variablesFoQuery = {
 			page: 1,
 			sort: sort,
 		};
 	} else {
+		// If we choose any other genre, add it to the variables tha will be passed to the query api
 		variablesFoQuery = {
 			page: 1,
 			sort: sort,
@@ -384,15 +401,17 @@ function typing(e) {
 			// If the search box is not empty search for that anime
 			submitSearch();
 		}
+
+		refreshScreen();
 	}
 }
 
 function deleteSearch() {
+	// Go back to the home page: first page and the most trending first
 	variablesFoQuery = {
 		page: 1,
-		sort: sort,
+		sort: 'TRENDING_DESC',
 	};
-	refreshScreen();
 }
 
 function submitSearch() {
@@ -401,7 +420,6 @@ function submitSearch() {
 		sort: sort,
 		search: inputAnimeName,
 	};
-	refreshScreen();
 }
 
 function refreshScreen() {
