@@ -99,6 +99,7 @@ query($id: Int){
     genres
     averageScore
     coverImage {
+	  large
 	  extraLarge
     }
   }
