@@ -46,7 +46,7 @@ button:hover {
 	opacity: 0.8;
 }
 
-/* buttons for the icons */
+/* buttons for the icons: heart, search and close */
 .icon {
 	line-height: 25px;
 	width: 30px;
@@ -101,7 +101,7 @@ option {
 	color: var(--primary-color);
 }
 
-@media (max-width: 660px) {
+@media (max-width: 700px) {
 	.navbar {
 		justify-content: center;
 	}
@@ -120,8 +120,8 @@ option {
 	justify-content: center;
 	align-items: center;
 	text-align: left;
-	display: none;
-	opacity: 0;
+	display: flex;
+	opacity: 1;
 	overflow-x: hidden;
 }
 
@@ -138,6 +138,7 @@ option {
 	box-shadow: 0px 0px 20px var(--secondary-color),
 		0px 0px 20px var(--secondary-color);
 	margin: 1rem;
+	width: 230px;
 }
 
 .favBtn {
@@ -193,6 +194,12 @@ option {
 	font-size: 1em;
 }
 
+@media (max-width: 600px) {
+	.anime-page .icon {
+		right: 5px;
+	}
+}
+
 @media (max-width: 740px) {
 	.anime-page {
 		flex-direction: column;
@@ -209,9 +216,33 @@ option {
 	}
 }
 
-@media (max-width: 600px) {
-	.anime-page .icon {
-		right: 5px;
+@media (min-width: 1400px) {
+	.anime-page {
+		justify-content: space-evenly;
+	}
+
+	.info {
+		flex: 1;
+		max-width: 50%;
+		margin-left: -30px;
+	}
+
+	.img-favBtn {
+		align-items: flex-end;
+		flex: 1;
+		max-width: 40%;
+		margin-left: -60px;
+	}
+
+	.anime-page img {
+		width: 50%;
+		max-width: 350px;
+	}
+
+	.favBtn {
+		width: 50%;
+		margin-right: 15px;
+		max-width: 350px;
 	}
 }
 
@@ -224,14 +255,15 @@ option {
 	/* auto-ft: make the columns wrap in new lines if there's no more space */
 	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
 	grid-row-gap: 10px;
-	justify-items: center;
+	justify-items: left;
 	align-items: center;
+	margin: auto;
 	width: 98%;
 }
 
-@media (min-width: 1000px) {
+@media (max-width: 600px) {
 	.animes-container {
-		margin: auto;
+		justify-items: center;
 	}
 }
 
@@ -271,21 +303,11 @@ option {
 	overflow: hidden;
 }
 
-/* Favorite animes page */
-.anime-fav-page {
-	justify-items: left;
-}
-
 /* LAST BUTTON */
 .show-more {
 	position: relative;
 	padding: 10px 20px;
 	margin: 50px 0 5px;
-}
-
-.active {
-	display: flex;
-	opacity: 1;
 }
 
 .hide {
