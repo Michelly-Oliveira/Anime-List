@@ -1,3 +1,3 @@
 # Anime-List
 
-![screenshot](./images/Sreecnshot1.jpg)
+![screenshot](./images/Screenshot.jpg)
